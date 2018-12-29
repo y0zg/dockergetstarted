@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+      mytv:
+        image: #TBU #stable 4.1
+        ports:
+         - "3004:3004"
+        environment:
+      nginx:
+        image: 3efe541154c7 #stable 4.1
+        ports:
+         - "80:80"
+      turn:
+        image: fcb6d152430e #stable 4.1
+        depends_on:
+         - nginx
+        ports:
+         - "3478-3479:3478-3479/tcp"
+         - "3478-3479:3478-3479/udp"
+         - "5349-5350:5349-5350/udp"
+         - "5349-5350:5349-5350/tcp"
+      platform:
+        image: 
+        deploy:
+          replicas: 3
+        ports:
+        - "3000-3001:3000-3001"
+        - "4000:80"
+        environment:
+         PUBLIC_IP: "${PUBLIC_IP}"
